@@ -93,9 +93,38 @@ body {
     height: 100%;
 }
 
-.score-text {
+.above-game {
+    height: 50px;
     font-size: 200%;
-    margin: 0 0 10px 10px;
+    margin-bottom: 10px;
+    padding: 5px 20px 5px;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.above-game p {
+    height: 50px;
+    line-height: 50px;
+    float: left;
+}
+
+.above-game a {
+    float: right;
+}
+
+.above-game .button {
+    display: block;
+    width: 130px;
+    height: 40px;
+    padding: 5px;
+    background-color: #ec4;
+    color: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .game-board {
@@ -134,12 +163,15 @@ body {
     height: 96px;
     margin: 2px;
     border: none;
-    background-color: #fff;
-}
+ }
 
 .card-got {
     position: relative;
+    width: 84px;
+    height: 84px;
+    margin: 5px;
     background-color: #333;
+    border: solid 3px #83c;
 }
 
 .card-got:after {
