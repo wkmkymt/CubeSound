@@ -14,8 +14,7 @@ var Board = (function() {
     this.CPU_CARD_CLASS_NAME      = "card-cpu";      // CPUのカード
 
     /* カードの標準の色 */
-    this.ON_COLOR  = "#333";
-    this.OFF_COLOR = "#ccc";
+    this.DEFAULT_COLOR  = "#ccc";
 
     /* カード枚数 */
     this._ROW = row;            // 横
@@ -90,14 +89,21 @@ var Board = (function() {
   function selectCard($this, self) {
     var cardIndex = $this.parent()[0].id.replace(self.CARD_CLASS_NAME, "");
     var card = self._cards[Number(cardIndex)];
-    self._selectedCards.push(card);
+
+    /* 1枚目と同じカード */
+    if(self._selectedCards.length)
+      if(card == self._selectedCards[0])
+        return;
 
     /* ジャッジ中じゃないならカードめくる */
-    if(!self._isJudging) {
+    if(!self._isJudging && !card.isTurning) {
+      card.isTurning = true;
       card.sound.play();
       $this
-        .css({ backgroundColor: card.bgColor })
+        // .css({ backgroundColor: card.bgColor })
         .addClass(self.SELECTED_CARD_CLASS_NAME);
+
+      self._selectedCards.push(card);
     }
 
     /* 2枚めくったら */
@@ -110,18 +116,20 @@ var Board = (function() {
 
     setTimeout(function() {
       /* 2枚とも同じとき */
-      if(cards[0].ID == cards[1].ID && cards[0] != cards[1]) {
+      if(cards[0].ID == cards[1].ID) {
         $(getClass(self.SELECTED_CARD_CLASS_NAME))
-          .addClass(self.GOT_CARD_CLASS_NAME + " " + self.USER_CARD_CLASS_NAME)
-          .css({ backgroundColor: self.ON_COLOR });
+          .addClass(self.GOT_CARD_CLASS_NAME + " " + self.USER_CARD_CLASS_NAME);
 
         self.score += 100;
         $(getId(self.SCORE_ID_NAME)).text(self.score);
       }
       /* 違ったとき */
       else {
-        $(getClass(self.CARD_CLASS_NAME) + ":not(" + getClass(self.GOT_CARD_CLASS_NAME) + ")")
-          .css({ backgroundColor: self.OFF_COLOR });
+        $(getClass(self.CARD_CLASS_NAME) + ":not(" + getClass(self.GOT_CARD_CLASS_NAME) + ")");
+//          .css({ backgroundColor: self.OFF_COLOR });
+
+        cards[0].isTurning = false;
+        cards[1].isTurning = false;
       }
 
       $(getClass(self.CARD_CLASS_NAME)).removeClass(self.SELECTED_CARD_CLASS_NAME);
@@ -167,6 +175,8 @@ var Card = (function() {
     this.ID      = id;     // カードID
     this.bgColor = "#fff"; // カードの背景色
     this.sound   = undefined;
+
+    this.isTurning = false;
   }
 
   // function debug() {
@@ -183,8 +193,8 @@ var Card = (function() {
     // var colorList = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff",
     //                  "#fff", "#000", "#aaa", "#a00", "#8f8", "#88f",
     //                  "#f60", "#a0c", "#ff8", "#600", "#060", "#006"];
-    var colorList = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff", "#fff", "#000", "#aaa"];
-    this.bgColor = colorList[Math.floor(this.ID % colorList.length)];
+    // var colorList = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff", "#fff", "#000", "#aaa"];
+    // this.bgColor = colorList[Math.floor(this.ID % colorList.length)];
 
     var soundLength = 9;
     var src = "sound/sound" + Math.floor(this.ID % soundLength).toString() + "." + getAudioExt();

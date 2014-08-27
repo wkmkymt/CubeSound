@@ -82,6 +82,16 @@ body {
 
 .site-header h1 a {
     color: #fff;
+    -webkit-text-shadow: 2px 2px 4px #ccc;
+    -moz-text-shadow: 2px 2px 4px #ccc;
+    text-shadow: 2px 2px 4px #ccc;
+    transition: All 0.2s ease;
+}
+
+.site-header h1 a:hover {
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    text-shadow: none;
 }
 
 
@@ -102,29 +112,37 @@ body {
     zoom: 1;
 }
 
-.above-game p {
-    height: 50px;
-    line-height: 50px;
+.above-game .box {
+    display: block;
+    height: 40px;
+    padding: 5px 30px;
+    line-height: 40px;
+    text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 2px 4px #333;
+    -moz-box-shadow: 2px 2px 4px #333;
+    box-shadow: 2px 2px 4px #333;
+    transition: All 0.2s ease;
+}
+
+.above-game p.box {
+    background-color: #876;
+    color: #fff;
     float: left;
 }
 
-.above-game a {
+.above-game a.box {
+    background-color: #ec4;
+    color: #fff;
+    cursor: pointer;
     float: right;
 }
 
-.above-game .button {
-    display: block;
-    width: 130px;
-    height: 40px;
-    padding: 5px;
-    background-color: #ec4;
-    color: #fff;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    line-height: 40px;
-    text-align: center;
-    cursor: pointer;
+.above-game a.box:hover {
+    background-color: #db4;
+    box-shadow: none;
 }
 
 .game-board {
@@ -153,9 +171,17 @@ body {
     margin: 5px;
     background-color: #ccc;
     border: solid 3px #83c;
-    -webkit-box-shadow: 2px 2px 4px #333;
-    -moz-box-shadow: 2px 2px 4px #333;
-    box-shadow: 2px 2px 4px #333;
+    -webkit-box-shadow: 4px 4px 8px #333;
+    -moz-box-shadow: 4px 4px 8px #333;
+    box-shadow: 4px 4px 8px #333;
+    transition: All 0.2s ease;
+    cursor: pointer;
+}
+
+.card:not(.card-got):hover {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .card-selected {
@@ -163,43 +189,27 @@ body {
     height: 96px;
     margin: 2px;
     border: none;
+    background-color: #fff;
+    -webkit-box-shadow: 4px 4px 8px #333;
+    -moz-box-shadow: 4px 4px 8px #333;
+    box-shadow: 4px 4px 8px #333;
  }
 
 .card-got {
-    position: relative;
-    width: 84px;
-    height: 84px;
+    width: 90px;
+    height: 90px;
     margin: 5px;
-    background-color: #333;
-    border: solid 3px #83c;
-}
-
-.card-got:after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 0;
-    top: 15px;
-    left: 22.5px;
-    border-top: 27px solid transparent;
-    border-right: 0 solid transparent;
-    border-bottom: 27px solid transparent;
+    background-repeat: no-repeat;
+    background-size: 90px 90px;
+    border: none;
 }
 
 .card-user {
-    border-color: #1bf;
-}
-
-.card-user:after {
-    border-left: 45px solid #1bf;
+    background-image: url("../img/userCard.png");
 }
 
 .card-cpu {
-    border-color: #f61;
-}
-
-.card-cpu:after {
-    border-left: 45px solid #f61;
+    background-image: url("../img/cpuCard.png");
 }
 
 
@@ -208,7 +218,7 @@ body {
    ===================================================== */
 .site-footer {
     width: 100%;
-    padding: 20px 0 40px;
+    padding: 20px 0 80px;
     background-color: #444;
 }
 
@@ -223,8 +233,15 @@ body {
 
 .site-footer p small a {
     color: #ddd;
+    -webkit-text-shadow: 2px 2px 4px #ccc;
+    -moz-text-shadow: 2px 2px 4px #ccc;
+    text-shadow: 1px 1px 2px #ccc;
+    transition: All 0.2s ease;
 }
 
 .site-footer p small a:hover {
     color: #fff;
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    text-shadow: none;
 }
