@@ -1,164 +1,209 @@
-/* =========
- *   Board
- * ========= */
+
+/* =================================================
+ * ==                    Board                    ==
+ * ================================================= */
+
 var Board = (function() {
 
+  /* ===============
+   *   Constructor
+   * =============== */
   function Board(row, col) {
     /* Class / ID 名 */
-    this.BOARD_ID_NAME            = "gameBoard";     // ボード
-    this.SCORE_ID_NAME            = "score";         // スコア
-    this.CARD_CLASS_NAME          = "card";          // カード
-    this.SELECTED_CARD_CLASS_NAME = "card-selected"; // 選択されたカード
-    this.GOT_CARD_CLASS_NAME      = "card-got";      // ペアになったカード
-    this.USER_CARD_CLASS_NAME     = "card-user";     // ユーザーのカード
-    this.CPU_CARD_CLASS_NAME      = "card-cpu";      // CPUのカード
+    this.BOARD_ID            = "gameBoard";     // ボード
+    this.SCORE_ID            = "score";         // スコア
+    this.CARD_CLASS          = "card";          // カード
+    this.SELECTED_CARD_CLASS = "card-selected"; // 選択されたカード
+    this.GOT_CARD_CLASS      = "card-got";      // ペアになったカード
+    this.USER_CARD_CLASS     = "card-user";     // ユーザーのカード
+    this.CPU_CARD_CLASS      = "card-cpu";      // CPUのカード
 
-    /* カードの標準の色 */
-    this.DEFAULT_COLOR  = "#ccc";
+    /* カードのマージン */
+    this.CARD_MARGIN          = 10; // .cardのマージン
+    this.SELECTED_CARD_MARGIN = 4;  // .card-selectedのマージン
 
     /* カード枚数 */
-    this._ROW = row;            // 横
-    this._COL = col;            // 縦
-    this._CARD_NUM = row * col; // 合計
-    this._PAIR_NUM = 4;         // 同じカードの枚数(2n)
+    this.ROW      = row;       // 横
+    this.COL      = col;       // 縦
+    this.CARD_NUM = row * col; // 合計
+    this.PAIR_NUM = 4;         // 同じカードの枚数(2n)
 
     /* カードリスト */
-    this._cards = new Array(row * col); // 全カード
-    this._selectedCards = [];           // 選択されたカード
+    this.cards = new Array(row * col); // 全カード
+    this.selectedCards = [];           // 選択されたカード
 
     /* フラグ */
-    this._isJudging = false; // ジャッジ中判定
+    this.isJudging = false; // ジャッジ中判定
 
-    this.score = 0; // スコア
+    /* スコア */
+    this.score = 0;
   }
 
-  // function debug() {
-  //   function log(name, item) {
-  //     console.log(name + ": ");
-  //     console.log(item);
-  //   }
 
-  //   log("Row", this._ROW);
-  //   log("Col", this._COL);
-  //   log("Cards", this._cards);
-  // }
+  /* =========
+   *   Debug
+   * ========= */
+  function debug() {
+    function log(name, item) {
+      console.log(name + ": ");
+      console.log(item);
+    }
 
-  function getId(id_name) {
-    return "#" + id_name;
+    log("Cards", this.cards);
+    log("Selected Cards", this.selectedCards);
   }
 
-  function getClass(class_name) {
-    return "." + class_name;
-  }
 
+  /* ==================
+   *   Get ID / Class
+   * ================== */
+  function getId(id_name)       { return "#" + id_name; }
+  function getClass(class_name) { return "." + class_name; }
+
+
+  /* ====================
+   *   Initialize Cards
+   * ==================== */
   function initializeCards() {
-    /* スコアを表示 */
-    $(getId(this.SCORE_ID_NAME)).text(this.score);
+    /* スコアの表示 (score: 0) */
+    $(getId(this.SCORE_ID)).text(this.score);
 
     /* カードをリストに追加 */
-    for(var i = 0; i < this._CARD_NUM; i++) {
-      var card = new Card(Math.floor(i / this._PAIR_NUM)); // 合計 (i / 4) * 4 枚
-      card.setStyle();                                     // カードIDに合わせてスタイル変更
+    for(var i = 0; i < this.CARD_NUM; i++) {
+      var card = new Card(Math.floor(i / this.PAIR_NUM)); // 1種類4枚になるようにID発行
+      card.setStyle();                                    // カードIDに合わせてスタイル変更
 
       do {
-        var index = Math.floor(Math.random() * this._CARD_NUM); // ランダムに追加
-      } while(typeof this._cards[index] !== "undefined");       // 空なindex値になるまでループ
-      this._cards[index] = card;
+        var index = Math.floor(Math.random() * this.CARD_NUM); // ランダムに追加
+      } while(typeof this.cards[index] !== "undefined");       // 空なindex値になるまでループ
+
+      this.cards[index] = card;
     }
 
     /* カードをボードに表示 */
-    for(i = 0; i < this._CARD_NUM; i++) {
-      var cardElm = this.createCardElment(i, this._cards[i]); // カード要素を作成
-      $(getId(this.BOARD_ID_NAME)).append(cardElm);          // ボードに追加
+    for(i = 0; i < this.CARD_NUM; i++) {
+      var cardElm = this.createCardElment(i, this.cards[i]); // カード要素を作成
+      $(getId(this.BOARD_ID)).append(cardElm);          // ボードに追加
     }
+
+    /* カードサイズの初期化 */
+    this.resizeElement($(getClass(this.CARD_CLASS)), this.CARD_MARGIN);
   }
 
+
+  /* =======================
+   *   Create Card Element
+   * ======================= */
   function createCardElment(index, card) {
     var self = this; // Board
 
     var cardElm = $("<div>")
-          .addClass(this.CARD_CLASS_NAME)
-          .bind("click touchstart", function() { selectCard($(this), self); });
+          .addClass(this.CARD_CLASS)
+          .bind("click touchstart", function() { self.selectCard($(this), self); });
     var cardWrapper = $("<li>")
-          .attr({ id: this.CARD_CLASS_NAME + index})
+          .attr({ id: this.CARD_CLASS + index})
           .append(cardElm);
 
     return cardWrapper;
   }
 
-  function selectCard($this, self) {
-    var cardIndex = $this.parent()[0].id.replace(self.CARD_CLASS_NAME, "");
-    var card = self._cards[Number(cardIndex)];
 
-    /* 1枚目と同じカード */
-    if(self._selectedCards.length)
-      if(card == self._selectedCards[0])
-        return;
+  /* ===================
+   *   Reseize Element
+   * =================== */
+  function resizeElement(elm, margin) {
+    var boardWidth = $(getId(this.BOARD_ID)).width(); // ボードサイズ
+    var cardWidth  = (boardWidth / this.ROW);         // ボードサイズをROW分割したサイズ
+
+    elm.css({ width:  (cardWidth - margin).toString() + "px",
+              height: (cardWidth - margin).toString() + "px"});
+  }
+
+
+  /* ===============
+   *   Select Card
+   * =============== */
+  function selectCard($this, self) {
+    var cardIndex = $this.parent()[0].id.replace(self.CARD_CLASS, "");
+    var card = self.cards[Number(cardIndex)];
 
     /* ジャッジ中じゃないならカードめくる */
-    if(!self._isJudging && !card.isTurning) {
-      card.isTurning = true;
-      card.sound.play();
-      $this
-        // .css({ backgroundColor: card.bgColor })
-        .addClass(self.SELECTED_CARD_CLASS_NAME);
+    if(!self.isJudging && !card.isTurning) {
+      card.isTurning = true;                    // 選択開始
+      card.sound.play();                        // SE再生
+      $this.addClass(self.SELECTED_CARD_CLASS);
 
-      self._selectedCards.push(card);
+      self.resizeElement($this, self.SELECTED_CARD_MARGIN); // 選択時リサイズ
+
+      self.selectedCards.push(card);
     }
 
     /* 2枚めくったら */
-    if(self._selectedCards.length >= 2)
-      judgeCard(self._selectedCards, self);
+    if(self.selectedCards.length >= 2)
+      self.judgeCard(self.selectedCards, self);
   };
 
+
+  /* ==============
+   *   Judge Card
+   * ============== */
   function judgeCard(cards, self) {
-    self._isJudging = true;
+    self.isJudging = true;
 
     setTimeout(function() {
       /* 2枚とも同じとき */
       if(cards[0].ID == cards[1].ID) {
-        $(getClass(self.SELECTED_CARD_CLASS_NAME))
-          .addClass(self.GOT_CARD_CLASS_NAME + " " + self.USER_CARD_CLASS_NAME);
+        $(getClass(self.SELECTED_CARD_CLASS))
+          .addClass(self.GOT_CARD_CLASS + " " + self.USER_CARD_CLASS);
 
         self.score += 100;
-        $(getId(self.SCORE_ID_NAME)).text(self.score);
+        $(getId(self.SCORE_ID)).text(self.score);
       }
       /* 違ったとき */
       else {
-        $(getClass(self.CARD_CLASS_NAME) + ":not(" + getClass(self.GOT_CARD_CLASS_NAME) + ")");
-//          .css({ backgroundColor: self.OFF_COLOR });
-
         cards[0].isTurning = false;
         cards[1].isTurning = false;
       }
 
-      $(getClass(self.CARD_CLASS_NAME)).removeClass(self.SELECTED_CARD_CLASS_NAME);
-      self._selectedCards = [];
-      self._isJudging = false;
+      $(getClass(self.CARD_CLASS)).removeClass(self.SELECTED_CARD_CLASS);
+      self.selectedCards = [];
+      self.isJudging = false;
+
+      self.resizeElement($(getClass(self.CARD_CLASS)), self.CARD_MARGIN);
     }, 750);
   }
 
-  function reset() {
-    $(getId(this.BOARD_ID_NAME)).empty();
 
-    this._cards = new Array(this._CARD_NUM);
-    this._selectedCards = [];
-    this._isJudging = false;
+  /* =========
+   *   Reset
+   * ========= */
+  function reset() {
+    $(getId(this.BOARD_ID)).empty();
+
+    this.cards = new Array(this.CARD_NUM);
+    this.selectedCards = [];
+    this.isJudging = false;
     this.score = 0;
   }
 
+
+  /* ====================
+   *   Define Prototype
+   * ==================== */
   Board.prototype = {
     // Constructor
     constructor: Board,
 
     // Debug
-    // debug: debug,
+    debug: debug,
 
     // Public Method
     initializeCards: initializeCards,
     createCardElment: createCardElment,
+    resizeElement: resizeElement,
+    selectCard: selectCard,
+    judgeCard: judgeCard,
     reset: reset
-
   };
 
   return Board;
@@ -166,29 +211,41 @@ var Board = (function() {
 }());
 
 
-/* =========
- *   Card
- * ========= */
+
+/* ================================================
+ * ==                    Card                    ==
+ * ================================================ */
 var Card = (function() {
 
+  /* ===============
+   *   Constructor
+   * =============== */
   function Card(id) {
-    this.ID      = id;     // カードID
-    this.bgColor = "#fff"; // カードの背景色
+    this.ID      = id;        // カードID
+    this.bgColor = "#fff";    // カードの背景色
     this.sound   = undefined;
 
     this.isTurning = false;
   }
 
-  // function debug() {
-  //   function log(name, item) {
-  //     console.log(name + ": ");
-  //     console.log(item);
-  //   }
 
-  //   log("ID", this.ID);
-  //   log("BackGroundColor", this.bgColor);
-  // }
+  /* =========
+   *   Debug
+   * ========= */
+  function debug() {
+    function log(name, item) {
+      console.log(name + ": ");
+      console.log(item);
+    }
 
+    log("ID", this.ID);
+    log("BackGroundColor", this.bgColor);
+  }
+
+
+  /* =============
+   *   Set Style
+   * ============= */
   function setStyle() {
     // var colorList = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff",
     //                  "#fff", "#000", "#aaa", "#a00", "#8f8", "#88f",
@@ -201,6 +258,10 @@ var Card = (function() {
     this.sound = new Audio(src);
   }
 
+
+  /* =======================
+   *   Get Audio Extension
+   * ======================= */
   function getAudioExt() {
     var ext   = "";
     var audio = new Audio();
@@ -215,12 +276,16 @@ var Card = (function() {
     return ext;
   }
 
+
+  /* ====================
+   *   Define Prototype
+   * ==================== */
   Card.prototype = {
     // Constructor
     constructor: Card,
 
     // Debug
-    // debug: debug,
+    debug: debug,
 
     // Public Method
     setStyle: setStyle
