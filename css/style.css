@@ -103,6 +103,7 @@ body {
     height: 100%;
 }
 
+/* ========== Above Game ========== */
 .above-game {
     height: 50px;
     font-size: 200%;
@@ -145,6 +146,7 @@ body {
     box-shadow: none;
 }
 
+/* ========== Game Board ========== */
 .game-board {
     width: 600px;
     height: 600px;
@@ -164,7 +166,7 @@ body {
     float: left;
 }
 
-/* ========== Card ========== */
+/* Card */
 .card {
     width: 84px;
     height: 84px;
