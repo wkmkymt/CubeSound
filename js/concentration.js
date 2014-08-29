@@ -62,6 +62,14 @@ var Board = (function() {
 
 
   /* ====================
+   *   Default Argument
+   * ==================== */
+  function defaultArg(variable, value) {
+    return (typeof variable === "undefined") ? value : variable;
+  }
+
+
+  /* ====================
    *   Initialize Cards
    * ==================== */
   function initializeCards() {
