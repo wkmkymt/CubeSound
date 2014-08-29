@@ -122,9 +122,9 @@ var Board = (function() {
   function resizeElement(elm, margin) {
     var boardWidth = $(getId(this.BOARD_ID)).width(); // ボードサイズ
     var cardWidth  = (boardWidth / this.ROW);         // ボードサイズをROW分割したサイズ
+    var cardSize   = (cardWidth - margin).toString() + "px";
 
-    elm.css({ width:  (cardWidth - margin).toString() + "px",
-              height: (cardWidth - margin).toString() + "px"});
+    elm.css({ width:  cardSize, height: cardSize, backgroundSize: cardSize });
   }
 
 
@@ -139,6 +139,7 @@ var Board = (function() {
     if(!self.isJudging && !card.isTurning) {
       card.isTurning = true;                    // 選択開始
       card.sound.play();                        // SE再生
+      card.sound = new Audio(card.sound.src);   // 次に呼ばれた時のため
       $this.addClass(self.SELECTED_CARD_CLASS);
 
       self.resizeElement($this, self.SELECTED_CARD_MARGIN); // 選択時リサイズ
