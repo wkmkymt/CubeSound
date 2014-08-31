@@ -6,7 +6,7 @@ var appConfig = {
   },
 
   class: {
-    normal:          "card",
+    normal:   "card",
     selected: "card-selected",
     got:      "card-got",
     user:     "card-user",
@@ -23,4 +23,4 @@ var appConfig = {
     selected: 2
   }
 
-}
+};

@@ -4,13 +4,13 @@ $(document).ready(function() {
   app.setConfig(appConfig);
   app.startGame();
 
-  /* ¥ê¥»¥Ã¥È¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿»ş */
+  /* ãƒªã‚»ãƒƒãƒˆãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸæ™‚ */
   $("#resetButton").bind("click touchstart", function() {
     app.reset();
     app.startGame();
   });
 
-  /* ¥¦¥£¥ó¥É¥¦¥µ¥¤¥ºÊÑ¹¹»ş */
+  /* ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºå¤‰æ›´æ™‚ */
   window.onresize = function() {
     app.resizeElement($(".card:not(.card-selected)"), 5);
     app.resizeElement($(".card-selected"), 2);

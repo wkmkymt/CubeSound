@@ -10,20 +10,20 @@ var CubeSound2D = (function() {
    *   Constructor
    * =============== */
   function CubeSound2D(boardID, row, col, pairNum) {
-    /* ¥«¡¼¥ÉËç¿ô */
+    /* ã‚«ãƒ¼ãƒ‰æšæ•° */
     this.ROW      = defaultArg(row, 6);
     this.COL      = defaultArg(col, 6);
     this.PAIR_NUM = defaultArg(pairNum, 4);
     this.CARD_NUM = this.ROW * this.COL;
 
-    /* ÀßÄê */
+    /* è¨­å®š */
     this.CONFIG = {
-      // IDÌ¾
+      // IDå
       ID: {
         BOARD: defaultArg(boardID, "gameBoard"),
         SCORE: "score"
       },
-      // ClassÌ¾
+      // Classå
       CLASS: {
         NORMAL:   "card",
         SELECTED: "card-selected",
@@ -31,28 +31,28 @@ var CubeSound2D = (function() {
         USER:     "card-user",
         CPU:      "card-cpu"
       },
-      // ¥µ¥¦¥ó¥É
+      // ã‚µã‚¦ãƒ³ãƒ‰
       SOUND: {
         SRC: "sound/sound",
         NUM: 9
       },
-      // ¥Ş¡¼¥¸¥ó
+      // ãƒãƒ¼ã‚¸ãƒ³
       MARGIN: {
         NORMAL  : 5,
         SELECTED: 2
       }
     }
 
-    /* ¥¹¥³¥¢ */
+    /* ã‚¹ã‚³ã‚¢ */
     this.score = 0;
 
-    /* ¥«¡¼¥É¥ê¥¹¥È */
+    /* ã‚«ãƒ¼ãƒ‰ãƒªã‚¹ãƒˆ */
     this.cards         = [];
     this.selectedCards = [];
 
-    /* È½ÄêÃæ¥Õ¥é¥° */
+    /* åˆ¤å®šä¸­ãƒ•ãƒ©ã‚° */
     this.isJudging = false;
-  };
+  }
 
 
   /* =========
@@ -106,7 +106,7 @@ var CubeSound2D = (function() {
    *   Start Game
    * ============== */
   function startGame() {
-    /* ¥«¡¼¥É¤ò¥ê¥¹¥È¤ËÄÉ²Ã */
+    /* ã‚«ãƒ¼ãƒ‰ã‚’ãƒªã‚¹ãƒˆã«è¿½åŠ  */
     for(var i = 0; i < this.CARD_NUM; i++) {
       var cardID = Math.floor(i / this.PAIR_NUM);
       var cardSoundSrc = this.CONFIG.SOUND.SRC + (cardID % this.CONFIG.SOUND.NUM).toString() + getSoundExt();
@@ -118,7 +118,7 @@ var CubeSound2D = (function() {
       this.cards[index] = createCard(cardID, cardSoundSrc);
     }
 
-    /* ¥«¡¼¥É¤ò¥Ü¡¼¥É¤ËÉ½¼¨ */
+    /* ã‚«ãƒ¼ãƒ‰ã‚’ãƒœãƒ¼ãƒ‰ã«è¡¨ç¤º */
     var cardList = $("<ul>");
     for(i = 0; i < this.CARD_NUM; i++) {
       var self = this;
@@ -127,10 +127,10 @@ var CubeSound2D = (function() {
     }
     getId(this.CONFIG.ID.BOARD).append(cardList);
 
-    /* ¥«¡¼¥É¥µ¥¤¥º¤Î½é´ü²½ */
+    /* ã‚«ãƒ¼ãƒ‰ã‚µã‚¤ã‚ºã®åˆæœŸåŒ– */
     this.resizeElement(getClass(this.CONFIG.CLASS.NORMAL), this.CONFIG.MARGIN.NORMAL);
 
-    /* ¥¹¥³¥¢¤ÎÉ½¼¨ */
+    /* ã‚¹ã‚³ã‚¢ã®è¡¨ç¤º */
     this.updateScore();
   }
 
@@ -222,14 +222,14 @@ var CubeSound2D = (function() {
     self.isJudging = true;
 
     setTimeout(function() {
-      /* 2Ëç¤È¤âÆ±¤¸¤È¤­ */
+      /* 2æšã¨ã‚‚åŒã˜ã¨ã */
       if(cards[0].ID == cards[1].ID) {
         getClass(self.CONFIG.CLASS.SELECTED).addClass(self.CONFIG.CLASS.GOT + " " + self.CONFIG.CLASS.USER);
 
         self.score += 100;
         self.updateScore();
       }
-      /* °ã¤Ã¤¿¤È¤­ */
+      /* é•ã£ãŸã¨ã */
       else {
         cards[0].isTurning = false;
         cards[1].isTurning = false;
