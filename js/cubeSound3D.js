@@ -1,56 +1,61 @@
 /* ===============================================================
  * =====                                                     =====
- * =====                    2D Cube Sound                    =====
+ * =====                    3D Cube Sound                    =====
  * =====                                                     =====
  * =============================================================== */
 
-var CubeSound2D = (function() {
+var CubeSound3D = (function() {
 
   /* ===============
    *   Constructor
    * =============== */
-  function CubeSound2D(boardID, row, col, pairNum) {
-    /* „Ç´„Éº„ÉâÊûöÊï∞ */
-    this.ROW      = defaultArg(row, 6);
-    this.COL      = defaultArg(col, 6);
+  function CubeSound3D(boardID, row, col, pairNum) {
+    /* •´°º•…ÀÁøÙ */
+    this.FACE     = 6;
+    this.ROW      = defaultArg(row, 3);
+    this.COL      = defaultArg(col, 3);
     this.PAIR_NUM = defaultArg(pairNum, 4);
-    this.CARD_NUM = this.ROW * this.COL;
+    this.CARD_NUM = this.ROW * this.COL * this.FACE;
 
-    /* Ë®≠ÂÆö */
+    /* ¿ﬂƒÍ */
     this.CONFIG = {
-      // IDÂêç
+      // IDÃæ
       ID: {
         BOARD: defaultArg(boardID, "gameBoard"),
         SCORE: "score"
       },
-      // ClassÂêç
+      // ClassÃæ
       CLASS: {
+        // Face
+        FACE:     "face",
+
+        // Card
         NORMAL:   "card",
         SELECTED: "card-selected",
         GOT:      "card-got",
         USER:     "card-user",
         CPU:      "card-cpu"
       },
-      // „Çµ„Ç¶„É≥„Éâ
+      // •µ•¶•Û•…
       SOUND: {
         SRC: "sound/sound",
         NUM: 9
       },
-      // „Éû„Éº„Ç∏„É≥
+      // •ﬁ°º•∏•Û
       MARGIN: {
         NORMAL  : 5,
         SELECTED: 2
       }
     };
 
-    /* „Çπ„Ç≥„Ç¢ */
+    /* •π•≥•¢ */
     this.score = 0;
 
-    /* „Ç´„Éº„Éâ„É™„Çπ„Éà */
+    /* •´°º•…•Í•π•» */
     this.cards         = [];
     this.selectedCards = [];
 
-    /* Âà§ÂÆö‰∏≠„Éï„É©„Ç∞ */
+    /* »ΩƒÍ√Ê•’•È•∞ */
     this.isJudging = false;
   }
 
@@ -88,6 +93,7 @@ var CubeSound2D = (function() {
     this.CONFIG.ID.BOARD        = defaultArg(config.id.board,         this.CONFIG.ID.BOARD);
     this.CONFIG.ID.SCORE        = defaultArg(config.id.score,         this.CONFIG.ID.SCORE);
 
+    this.CONFIG.CLASS.FACE      = defaultArg(config.class.face,       this.CONFIG.CLASS.FACE);
     this.CONFIG.CLASS.NORMAL    = defaultArg(config.class.normal,     this.CONFIG.CLASS.NORMAL);
     this.CONFIG.CLASS.SELECTED  = defaultArg(config.class.selected,   this.CONFIG.CLASS.SELECTED);
     this.CONFIG.CLASS.GOT       = defaultArg(config.class.got,        this.CONFIG.CLASS.GOT);
@@ -106,7 +112,7 @@ var CubeSound2D = (function() {
    *   Start Game
    * ============== */
   function startGame() {
-    /* „Ç´„Éº„Éâ„Çí„É™„Çπ„Éà„Å´ËøΩÂä† */
+    /* •´°º•…§Ú•Í•π•»§Àƒ…≤√ */
     for(var i = 0; i < this.CARD_NUM; i++) {
       var cardID = Math.floor(i / this.PAIR_NUM);
       var cardSoundSrc = this.CONFIG.SOUND.SRC + (cardID % this.CONFIG.SOUND.NUM).toString() + getSoundExt();
@@ -118,7 +124,7 @@ var CubeSound2D = (function() {
       this.cards[index] = createCard(cardID, cardSoundSrc);
     }
 
-    /* „Ç´„Éº„Éâ„Çí„Éú„Éº„Éâ„Å´Ë°®Á§∫ */
+    /* •´°º•…§Ú•‹°º•…§À…Ωº® */
     var cardList = $("<ul>");
     for(i = 0; i < this.CARD_NUM; i++) {
       var self = this;
@@ -127,10 +133,10 @@ var CubeSound2D = (function() {
     }
     getId(this.CONFIG.ID.BOARD).append(cardList);
 
-    /* „Ç´„Éº„Éâ„Çµ„Ç§„Ç∫„ÅÆÂàùÊúüÂåñ */
+    /* •´°º•…•µ•§•∫§ŒΩÈ¥¸≤Ω */
     this.resizeElement(getClass(this.CONFIG.CLASS.NORMAL), this.CONFIG.MARGIN.NORMAL);
 
-    /* „Çπ„Ç≥„Ç¢„ÅÆË°®Á§∫ */
+    /* •π•≥•¢§Œ…Ωº® */
     this.updateScore();
   }
 
@@ -222,14 +228,14 @@ var CubeSound2D = (function() {
     self.isJudging = true;
 
     setTimeout(function() {
-      /* 2Êûö„Å®„ÇÇÂêå„Åò„Å®„Åç */
+      /* 2ÀÁ§»§‚∆±§∏§»§≠ */
       if(cards[0].ID == cards[1].ID) {
         getClass(self.CONFIG.CLASS.SELECTED).addClass(self.CONFIG.CLASS.GOT + " " + self.CONFIG.CLASS.USER);
 
         self.score += 100;
         self.updateScore();
       }
-      /* ÈÅï„Å£„Åü„Å®„Åç */
+      /* ∞„§√§ø§»§≠ */
       else {
         cards[0].isTurning = false;
         cards[1].isTurning = false;
@@ -268,23 +274,18 @@ var CubeSound2D = (function() {
   /* ====================
    *   Define Prototype
    * ==================== */
-  CubeSound2D.prototype = {
+  CubeSound3D.prototype = {
     /* Constructor */
-    constructor: CubeSound2D,
+    constructor: CubeSound3D,
 
     /* Debug */
-    debug: debug,
+    debug: debug
 
     /* Public Method */
-    setConfig: setConfig,
-    startGame: startGame,
-    resizeElement: resizeElement,
-    updateScore: updateScore,
-    reset: reset
   };
 
 
-  return CubeSound2D;
+  return CubeSound3D;
 
 })();
 

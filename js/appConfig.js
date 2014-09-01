@@ -6,6 +6,8 @@ var appConfig = {
   },
 
   class: {
+    face:     "face",
+
     normal:   "card",
     selected: "card-selected",
     got:      "card-got",

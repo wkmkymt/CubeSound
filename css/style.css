@@ -85,18 +85,18 @@ body {
 .site-header h1 a {
     color: #fff;
     -webkit-text-shadow: 2px 2px 4px #ccc;
-    -moz-text-shadow: 2px 2px 4px #ccc;
-    text-shadow: 2px 2px 4px #ccc;
+       -moz-text-shadow: 2px 2px 4px #ccc;
+            text-shadow: 2px 2px 4px #ccc;
     -webkit-transition: All 0.2s ease;
-    -moz-transition: All 0.2s ease;
-    -o-transition: All 0.2s ease;
-    transition: All 0.2s ease;
+       -moz-transition: All 0.2s ease;
+         -o-transition: All 0.2s ease;
+            transition: All 0.2s ease;
 }
 
 .site-header h1 a:hover {
     -webkit-text-shadow: none;
-    -moz-text-shadow: none;
-    text-shadow: none;
+       -moz-text-shadow: none;
+            text-shadow: none;
 }
 
 
@@ -109,9 +109,12 @@ body {
 }
 
 .wrap {
+    position: relative;
     width: 610px;
     margin: 0 auto;
     padding: 20px 15px;
+    overflow: hidden;
+    zoom: 1;
 }
 
 @media screen and (max-width: 640px) {
@@ -121,11 +124,22 @@ body {
     }
 }
 
+.wrap > div {
+    margin: 10px 0;
+}
+
+.wrap > div:first-of-type {
+    margin-top: 0;
+}
+
+.wrap > div:last-of-type {
+    margin-bottom: 0;
+}
+
 /* ========== Above Game ========== */
 .above-game {
     height: 50px;
-    margin-bottom: 10px;
-    padding: 5px 20px 5px;
+    padding: 5px 20px;
     font-size: 200%;
     overflow: hidden;
     zoom: 1;
@@ -145,15 +159,15 @@ body {
     line-height: 40px;
     text-align: center;
     -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
     -webkit-box-shadow: 2px 2px 4px #333;
-    -moz-box-shadow: 2px 2px 4px #333;
-    box-shadow: 2px 2px 4px #333;
+       -moz-box-shadow: 2px 2px 4px #333;
+            box-shadow: 2px 2px 4px #333;
     -webkit-transition: All 0.2s ease;
-    -moz-transition: All 0.2s ease;
-    -o-transition: All 0.2s ease;
-    transition: All 0.2s ease;
+       -moz-transition: All 0.2s ease;
+         -o-transition: All 0.2s ease;
+            transition: All 0.2s ease;
 }
 
 @media screen and (max-width: 480px) {
@@ -184,47 +198,190 @@ body {
 
 /* ========== Game Board ========== */
 .game-board {
-    box-sizing: border-box;
+    position: relative;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
     width: 100%;
     height: 100%;
-    margin: 0 auto;
     padding: 5px;
-    background-color: #666;
 }
 
-.game-board ul {
+/* == Rotation Navigation == */
+.rotation-nav {
+    position: absolute;
+    width: 600px;
+    height: 474px;
+}
+
+.rotation-nav ul {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.rotation-nav ul li {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+}
+
+.rotation-nav ul li.top {
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.rotation-nav ul li.right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.rotation-nav ul li.bottom {
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.rotation-nav ul li.left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.rotation-nav .button {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.rotation-nav .top .button {
+    background-image: url("../img/navTop.png");
+}
+
+.rotation-nav .right .button {
+    background-image: url("../img/navRight.png");
+}
+
+.rotation-nav .bottom .button {
+    background-image: url("../img/navBottom.png");
+}
+
+.rotation-nav .left .button {
+    background-image: url("../img/navLeft.png");
+}
+
+/* == Cube == */
+.cube-wrap {
+    display: -webkit-box;
+    padding: 30px;
+    -webkit-transform-style: preserve-3d;
+       -moz-transform-style: preserve-3d;
+    -webkit-perspective: 1200;
+       -moz-perspective: 1200;
+    -webkit-transform: rotateX(-20deg) rotateY(-20deg);
+       -moz-transform: rotateX(-15deg) rotateY(-15deg);
+}
+
+.cube {
+    position: relative;
+    width: 314px;
+    height: 314px;
+    margin: 50px auto;
+    -webkit-transform-style: preserve-3d;
+       -moz-transform-style: preserve-3d;
+    -webkit-transform: translateZ( -157px );
+       -moz-transform: translateZ( -157px );
+}
+
+/* Face */
+.cube .face {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+    border: solid 2px #000;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+
+.cube .front {
+	  -webkit-transform: translateZ(157px);
+       -moz-transform: translateZ(157px);
+    background-color: rgba(255, 100, 100, 0.7);
+}
+
+.cube .back {
+	  -webkit-transform: rotateX(-180deg) translateZ(157px);
+       -moz-transform: rotateX(-180deg) translateZ(157px);
+    background-color: rgba(100, 255, 100, 0.7);
+}
+
+.cube .right {
+	  -webkit-transform: rotateY(90deg) translateZ(157px);
+       -moz-transform: rotateY(90deg) translateZ(157px);
+    background-color: rgba(100, 100, 255, 0.7);
+}
+
+.cube .left {
+	  -webkit-transform: rotateY(-90deg) translateZ(157px);
+       -moz-transform: rotateY(-90deg) translateZ(157px);
+    background-color: rgba(100, 255, 255, 0.7);
+}
+
+.cube .top  {
+	  -webkit-transform: rotateX(90deg) translateZ(157px);
+       -moz-transform: rotateX(90deg) translateZ(157px);
+    background-color: rgba(255, 100, 255, 0.7);
+}
+
+.cube .bottom {
+	  -webkit-transform: rotateX(-90deg) translateZ(157px);
+       -moz-transform: rotateX(-90deg) translateZ(157px);
+    background-color: rgba(255, 255, 100, 0.7);
+}
+
+.cube ul {
     width: 100%;
     height: 100%;
     overflow: hidden;
     zoom: 1;
 }
 
-.game-board ul li {
-    width: 16.666666666666666666666%;
-    height: 16.666666666666666666666%;
+.cube ul li {
+    width: 33.333333333333333333333%;
+    height: 33.333333333333333333333%;
     float: left;
 }
 
 /* Card */
 .card {
-    box-sizing: border-box;
+    width: 90px;
+    height: 90px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
     margin: 5px;
     background-color: #ccc;
     border: solid 3px #83c;
     -webkit-box-shadow: 4px 4px 8px #333;
-    -moz-box-shadow: 4px 4px 8px #333;
-    box-shadow: 4px 4px 8px #333;
+       -moz-box-shadow: 4px 4px 8px #333;
+            box-shadow: 4px 4px 8px #333;
     -webkit-transition: All 0.2s ease;
-    -moz-transition: All 0.2s ease;
-    -o-transition: All 0.2s ease;
-    transition: All 0.2s ease;
+       -moz-transition: All 0.2s ease;
+         -o-transition: All 0.2s ease;
+            transition: All 0.2s ease;
     cursor: pointer;
 }
 
 .card:not(.card-got):hover {
     -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
 }
 
 .card-selected {
@@ -232,8 +389,8 @@ body {
     border: none;
     background-color: #fff;
     -webkit-box-shadow: 4px 4px 8px #333;
-    -moz-box-shadow: 4px 4px 8px #333;
-    box-shadow: 4px 4px 8px #333;
+       -moz-box-shadow: 4px 4px 8px #333;
+            box-shadow: 4px 4px 8px #333;
  }
 
 .card-got {
@@ -284,17 +441,17 @@ body {
 .site-footer p small a {
     color: #ddd;
     -webkit-text-shadow: 2px 2px 4px #ccc;
-    -moz-text-shadow: 2px 2px 4px #ccc;
-    text-shadow: 1px 1px 2px #ccc;
+       -moz-text-shadow: 2px 2px 4px #ccc;
+            text-shadow: 1px 1px 2px #ccc;
     -webkit-transition: All 0.2s ease;
-    -moz-transition: All 0.2s ease;
-    -o-transition: All 0.2s ease;
-    transition: All 0.2s ease;
+       -moz-transition: All 0.2s ease;
+         -o-transition: All 0.2s ease;
+            transition: All 0.2s ease;
 }
 
 .site-footer p small a:hover {
     color: #fff;
     -webkit-text-shadow: none;
-    -moz-text-shadow: none;
-    text-shadow: none;
+       -moz-text-shadow: none;
+            text-shadow: none;
 }
