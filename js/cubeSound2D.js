@@ -41,7 +41,7 @@ var CubeSound2D = (function() {
         NORMAL  : 5,
         SELECTED: 2
       }
-    }
+    };
 
     /* スコア */
     this.score = 0;
@@ -97,8 +97,8 @@ var CubeSound2D = (function() {
     this.CONFIG.SOUND.SRC       = defaultArg(config.sound.src,        this.CONFIG.SOUND.SRC);
     this.CONFIG.SOUND.NUM       = defaultArg(config.sound.num,        this.CONFIG.SOUND.NUM);
 
-    this.CONFIG.MARGIN.NORMAL   = defaultArg(config.margin.normal,    this.CONFIG.MARGIN.NORMAL)
-    this.CONFIG.MARGIN.SELECTED = defaultArg(config.margin.selected,  this.CONFIG.MARGIN.SELECTED)
+    this.CONFIG.MARGIN.NORMAL   = defaultArg(config.margin.normal,    this.CONFIG.MARGIN.NORMAL);
+    this.CONFIG.MARGIN.SELECTED = defaultArg(config.margin.selected,  this.CONFIG.MARGIN.SELECTED);
   }
 
 
@@ -129,6 +129,9 @@ var CubeSound2D = (function() {
 
     /* カードサイズの初期化 */
     this.resizeElement(getClass(this.CONFIG.CLASS.NORMAL), this.CONFIG.MARGIN.NORMAL);
+
+    var cardListRate = (100.0 / this.ROW).toString() + "%";
+    $("[id^='" + this.CONFIG.CLASS.NORMAL + "']").css({ width: cardListRate, height: cardListRate });
 
     /* スコアの表示 */
     this.updateScore();

@@ -200,8 +200,6 @@ body {
 }
 
 .game-board ul li {
-    width: 16.666666666666666666666%;
-    height: 16.666666666666666666666%;
     float: left;
 }
 
