@@ -193,7 +193,9 @@ body {
 
 .above-game a.box:hover {
     background-color: #db4;
-    box-shadow: none;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
 }
 
 /* ========== Game Board ========== */
@@ -204,26 +206,18 @@ body {
             box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 30px;
+    padding: 10px;
     -webkit-transform-style: preserve-3d;
        -moz-transform-style: preserve-3d;
     -webkit-perspective: 1200;
        -moz-perspective: 1200;
-    -webkit-transform: rotateX(-15deg) rotateY(-15deg);
-       -moz-transform: rotateX(-15deg) rotateY(-15deg);
-         -o-transform: rotateX(-15deg) rotateY(-15deg);
-            transform: rotateX(-15deg) rotateY(-15deg);
-    -webkit-transform-origin: left top;
-       -moz-transform-origin: left top;
-         -o-transform-origin: left top;
-            transform-origin: left top;
 }
 
 /* == Cube == */
 .cube {
     width: 310px;
     height: 310px;
-    margin: 50px auto;
+    margin: 100px auto;
     -webkit-transform-style: preserve-3d;
        -moz-transform-style: preserve-3d;
     -webkit-transform: translateZ( -155px );
@@ -367,44 +361,74 @@ body {
             box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 30px;
+    padding: 10px;
+}
+
+.rotation-nav ul {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.rotation-nav ul li {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin: auto;
 }
 
 .rotation-nav .top {
-    top: -1px;
+    top: 0;
     right: 0;
     left: 0;
 }
 
 .rotation-nav .right {
     top: 0;
-    right: -1px;
+    right: 0;
     bottom: 0;
 }
 
 .rotation-nav .bottom {
     right: 0;
-    bottom: -1px;
+    bottom: 0;
     left: 0;
 }
 
 .rotation-nav .left {
     top: 0;
     bottom: 0;
-    left: -1px;
+    left: 0;
 }
 
+/* Button */
 .rotation-nav .button {
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
-    background-size: 100px;
-    background-position: center;
+    background-size: 100%;
+    -webkit-border-radius: 50%;
+       -moz-border-radius: 50%;
+            border-radius: 50%;
+    -webkit-box-shadow: 2px 2px 4px #aaa;
+       -moz-box-shadow: 2px 2px 4px #aaa;
+            box-shadow: 2px 2px 4px #666;
+    -webkit-transition: All 0.2s ease;
+       -moz-transition: All 0.2s ease;
+         -o-transition: All 0.2s ease;
+            transition: All 0.2s ease;
+    cursor: pointer;
+}
+
+.rotation-nav .button:hover {
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
 }
 
 .rotation-nav .top .button {
     background-image: url("../img/navTop.png");
-p}
+}
 
 .rotation-nav .right .button {
     background-image: url("../img/navRight.png");
@@ -419,33 +443,42 @@ p}
 }
 
 
-
 /* ===================================================== */
-.rolling {
-    -webkit-animation: rolling 2s infinite;
+.rotate-top {
+    -webkit-animation: rotate-top 2s infinite;
 }
 
-.pitching {
-    -webkit-animation: pitching 2s infinite;
+.rotate-right {
+    -webkit-animation: rotate-right 2s infinite;
 }
 
-.yawing {
-    -webkit-animation: yawing 2s infinite;
+.rotate-bottom {
+    -webkit-animation: rotate-bottom 2s infinite;
 }
 
-@-webkit-keyframes rolling {
-      0% { -webkit-transform: translateZ(-100px) rotateX(0deg); }
-    100% { -webkit-transform: translateZ(-100px) rotateX(360deg); }
+.rotate-left {
+    -webkit-animation: rotate-left 2s infinite;
 }
 
-@-webkit-keyframes pitching {
-      0% { -webkit-transform: translateZ(-100px) rotateY(0deg); }
-    100% { -webkit-transform: translateZ(-100px) rotateY(360deg); }
+
+@-webkit-keyframes rotate-top {
+      0% { -webkit-transform: translateZ(-155px) rotateX(0deg); }
+    100% { -webkit-transform: translateZ(-155px) rotateX(360deg); }
 }
 
-@-webkit-keyframes yawing {
-      0% { -webkit-transform: translateZ(-100px) rotateZ(0deg); }
-    100% { -webkit-transform: translateZ(-100px) rotateZ(360deg); }
+@-webkit-keyframes rotate-right {
+      0% { -webkit-transform: translateZ(-155px) rotateY(0deg); }
+    100% { -webkit-transform: translateZ(-155px) rotateY(360deg); }
+}
+
+@-webkit-keyframes rotate-bottom {
+      0% { -webkit-transform: translateZ(-155px) rotateX(0deg); }
+    100% { -webkit-transform: translateZ(-155px) rotateX(-360deg); }
+}
+
+@-webkit-keyframes rotate-left {
+      0% { -webkit-transform: translateZ(-155px) rotateY(0deg); }
+    100% { -webkit-transform: translateZ(-155px) rotateY(-360deg); }
 }
 /* ===================================================== */
 
