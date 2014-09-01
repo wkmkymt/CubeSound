@@ -1,7 +1,7 @@
 var appConfig = {
 
   id: {
-    board: "gameBoard",
+    cube:  "cube",
     score: "score"
   },
 

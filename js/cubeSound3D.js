@@ -9,19 +9,20 @@ var CubeSound3D = (function() {
   /* ===============
    *   Constructor
    * =============== */
-  function CubeSound3D(boardID, row, col, pairNum) {
+  function CubeSound3D(cubeID, row, col, pairNum) {
     /* カード枚数 */
-    this.FACE     = 6;
-    this.ROW      = defaultArg(row, 3);
-    this.COL      = defaultArg(col, 3);
-    this.PAIR_NUM = defaultArg(pairNum, 4);
-    this.CARD_NUM = this.ROW * this.COL * this.FACE;
+    this.FACE          = 6;
+    this.ROW           = defaultArg(row, 3);
+    this.COL           = defaultArg(col, 3);
+    this.PAIR_NUM      = defaultArg(pairNum, 4);
+    this.FACE_CARD_NUM = this.ROW * this.COL;
+    this.CARD_NUM      = this.FACE_CARD_NUM * this.FACE;
 
     /* 設定 */
     this.CONFIG = {
       // ID名
       ID: {
-        BOARD: defaultArg(boardID, "gameBoard"),
+        CUBE: defaultArg(cubeID, "cube"),
         SCORE: "score"
       },
       // Class名
@@ -68,6 +69,17 @@ var CubeSound3D = (function() {
       console.log("===== " + name + " =====");
       console.log(item);
     }
+
+    // log("Face", this.FACE);
+    // log("Row", this.ROW);
+    // log("Col", this.COL);
+    // log("Pair", this.PAIR_NUM);
+    // log("FaceCardMax", this.FACE_CARD_NUM);
+    // log("CardMax", this.CARD_NUM);
+
+    // log("Config", this.CONFIG);
+
+    log("Cards", this.cards);
   }
 
 
@@ -90,7 +102,7 @@ var CubeSound3D = (function() {
    *   Set Config
    * ============== */
   function setConfig(config) {
-    this.CONFIG.ID.BOARD        = defaultArg(config.id.board,         this.CONFIG.ID.BOARD);
+    this.CONFIG.ID.CUBE        = defaultArg(config.id.cube,         this.CONFIG.ID.CUBE);
     this.CONFIG.ID.SCORE        = defaultArg(config.id.score,         this.CONFIG.ID.SCORE);
 
     this.CONFIG.CLASS.FACE      = defaultArg(config.class.face,       this.CONFIG.CLASS.FACE);
@@ -125,16 +137,23 @@ var CubeSound3D = (function() {
     }
 
     /* カードをボードに表示 */
-    var cardList = $("<ul>");
-    for(i = 0; i < this.CARD_NUM; i++) {
-      var self = this;
-      var cardElm = createCardElement(this.CONFIG.CLASS.NORMAL, i, function() { selectCard($(this), self); });
-      cardList.append(cardElm);
-    }
-    getId(this.CONFIG.ID.BOARD).append(cardList);
+    var self = this;
+    getClass(this.CONFIG.CLASS.FACE).each(function(index) {
+      var cardList = $("<ul>");
+      for(var i = 0; i < self.FACE_CARD_NUM; i++) {
+        var cardElm = createCardElement(self.CONFIG.CLASS.NORMAL,
+                                        self.FACE_CARD_NUM * index + i,
+                                        function() { selectCard($(this), self); });
+        cardList.append(cardElm);
+      }
+      $(this).append(cardList);
+    });
 
     /* カードサイズの初期化 */
     this.resizeElement(getClass(this.CONFIG.CLASS.NORMAL), this.CONFIG.MARGIN.NORMAL);
+
+    var cardListRate = (100.0 / this.ROW).toString + "%";
+    $("[id^='" + this.CONFIG.CLASS.NORMAL + "']").css({ width: cardListRate, height: cardListRate });
 
     /* スコアの表示 */
     this.updateScore();
@@ -190,8 +209,8 @@ var CubeSound3D = (function() {
    *   Reseize Element
    * =================== */
   function resizeElement(elm, margin) {
-    var boardWidth = getId(this.CONFIG.ID.BOARD).width();
-    var cardWidth  = boardWidth / this.ROW;
+    var cubeWidth = getClass(this.CONFIG.CLASS.FACE).width();
+    var cardWidth  = cubeWidth / this.ROW;
     var cardSize   = (cardWidth - margin * 2).toString() + "px";
 
     elm.css({ width: cardSize, height: cardSize, backgroundSize: cardSize });
@@ -262,7 +281,7 @@ var CubeSound3D = (function() {
    *   Reset
    * ========= */
   function reset() {
-    getId(this.CONFIG.ID.BOARD).empty();
+    getClass(this.CONFIG.CLASS.FACE).empty();
 
     this.cards = [];
     this.selectedCards = [];
@@ -279,9 +298,14 @@ var CubeSound3D = (function() {
     constructor: CubeSound3D,
 
     /* Debug */
-    debug: debug
+    debug: debug,
 
     /* Public Method */
+    setConfig: setConfig,
+    startGame: startGame,
+    resizeElement: resizeElement,
+    updateScore: updateScore,
+    reset: reset
   };
 
 
