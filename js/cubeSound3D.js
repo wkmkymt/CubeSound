@@ -18,6 +18,19 @@ var CubeSound3D = (function() {
     this.FACE_CARD_NUM = this.ROW * this.COL;
     this.CARD_NUM      = this.FACE_CARD_NUM * this.FACE;
 
+    /* アングル */
+    this.angle  = { X: 0, Y: 0, Z: 0 };
+
+    /* スコア */
+    this.score = 0;
+
+    /* カードリスト */
+    this.cards         = [];
+    this.selectedCards = [];
+
+    /* 判定中フラグ */
+    this.isJudging = false;
+
     /* 設定 */
     this.CONFIG = {
       // ID名
@@ -48,16 +61,6 @@ var CubeSound3D = (function() {
         SELECTED: 2
       }
     };
-
-    /* スコア */
-    this.score = 0;
-
-    /* カードリスト */
-    this.cards         = [];
-    this.selectedCards = [];
-
-    /* 判定中フラグ */
-    this.isJudging = false;
   }
 
 
@@ -127,7 +130,7 @@ var CubeSound3D = (function() {
     /* カードをリストに追加 */
     for(var i = 0; i < this.CARD_NUM; i++) {
       var cardID = Math.floor(i / this.PAIR_NUM);
-      var cardSoundSrc = this.CONFIG.SOUND.SRC + (cardID % this.CONFIG.SOUND.NUM).toString() + getSoundExt();
+      var cardSoundSrc = this.CONFIG.SOUND.SRC + (cardID % this.CONFIG.SOUND.NUM) + getSoundExt();
 
       do {
         var index = Math.floor(Math.random() * this.CARD_NUM);
@@ -152,7 +155,7 @@ var CubeSound3D = (function() {
     /* カードサイズの初期化 */
     this.resizeElement(getClass(this.CONFIG.CLASS.NORMAL), this.CONFIG.MARGIN.NORMAL);
 
-    var cardListRate = (100.0 / this.ROW).toString + "%";
+    var cardListRate = (100.0 / this.ROW) + "%";
     $("[id^='" + this.CONFIG.CLASS.NORMAL + "']").css({ width: cardListRate, height: cardListRate });
 
     /* スコアの表示 */
@@ -198,7 +201,7 @@ var CubeSound3D = (function() {
           .addClass(class_name)
           .bind("click touchstart", touchEvent);
     var cardElm = $("<li>")
-          .attr({ id: class_name + index.toString() })
+          .attr({ id: class_name + index })
           .append(cardMain);
 
     return cardElm;
@@ -211,7 +214,7 @@ var CubeSound3D = (function() {
   function resizeElement(elm, margin) {
     var cubeWidth = getClass(this.CONFIG.CLASS.FACE).width();
     var cardWidth  = cubeWidth / this.ROW;
-    var cardSize   = (cardWidth - margin * 2).toString() + "px";
+    var cardSize   = (cardWidth - margin * 2) + "px";
 
     elm.css({ width: cardSize, height: cardSize, backgroundSize: cardSize });
   }
@@ -278,6 +281,40 @@ var CubeSound3D = (function() {
 
 
   /* =========
+   *   Rotate
+   * ========= */
+  function rotate(angle) {
+    this.angle.X += angle.x;
+    this.angle.Y += angle.y;
+    this.angle.Z += angle.z;
+
+    var rotateVal = "rotateX(" + this.angle.X + "deg) " +
+                    "rotateY(" + this.angle.Y + "deg) " +
+                    "rotateZ(" + this.angle.Z + "deg)";
+    getId(this.CONFIG.ID.CUBE).css(getTransformPrefix(), "translateZ(-155px) " + rotateVal);
+  }
+
+
+  /* ========================
+   *   Get Transform Prefix
+   * ======================== */
+  function getTransformPrefix() {
+    var prefixes = [
+      "transform",
+      "WebkitTransform",
+      "MozTransform",
+      "OTransform",
+      "msTransform"
+    ];
+
+    for(var i = 0; i < prefixes.length; i++)
+      if(typeof $("<div>").css(prefixes[i]) !== "undefined")
+        return prefixes[i];
+    return prefixes[0];
+  }
+
+
+  /* =========
    *   Reset
    * ========= */
   function reset() {
@@ -305,6 +342,7 @@ var CubeSound3D = (function() {
     startGame: startGame,
     resizeElement: resizeElement,
     updateScore: updateScore,
+    rotate: rotate,
     reset: reset
   };
 
