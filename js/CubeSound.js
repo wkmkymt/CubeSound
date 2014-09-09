@@ -290,8 +290,6 @@ var CubeSound2D = (function() {
 
     /* 実際に操作するボード */
     this._mainBoard = getId(this.CONFIG.ID.BOARD);
-
-    console.log(getId(this.CONFIG.ID.BOARD));
   }
 
 
