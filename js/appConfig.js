@@ -1,26 +1,28 @@
 var appConfig = {
 
-  id: {
-    board: "gameBoard",
-    score: "score"
+  ID: {
+    CUBE:  "cube",
+    SCORE: "score"
   },
 
-  class: {
-    normal:   "card",
-    selected: "card-selected",
-    got:      "card-got",
-    user:     "card-user",
-    cpu:      "card-cpu"
+  CLASS: {
+    FACE:     "face",
+
+    NORMAL:   "card",
+    SELECTED: "card-selected",
+    GOT:      "card-got",
+    USER:     "card-user",
+    CPU:      "card-cpu"
   },
 
-  sound: {
-    src: "sound/sound",
-    num: 9
+  SOUND: {
+    SRC: "sound/sound",
+    NUM: 9
   },
 
-  margin: {
-    normal: 5,
-    selected: 2
+  MARGIN: {
+    NORMAL: 5,
+    SELECTED: 2
   }
 
 };
