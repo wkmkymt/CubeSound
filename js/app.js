@@ -17,25 +17,9 @@ $(document).ready(function() {
   };
 
   /* ≤Û≈æ */
-  var angles = {
-    side: {
-      up:    { x:  90, y:   0, z:  0 },
-      down:  { x: -90, y:   0, z:  0 },
-      right: { x:  0,  y:  90, z:  0 },
-      left:  { x:  0,  y: -90, z:  0 }
-    },
-    bottom: {
-      up:    { x:  90, y:  0, z:   0 },
-      down:  { x: -90, y:  0, z:   0 },
-      right: { x:   0, y:  0, z:  90 },
-      left:  { x:   0, y:  0, z: -90 }
-    }
-  };
-
   $(".rotate-button").bind("click touchstart", function() {
-    var angleName = $(this).parent()[0].className;
-    var faceType  = (app.angle.X % 180) ? "bottom" : "side";
-    app.rotate(angles[faceType][angleName]);
+    var position = $(this).parent()[0].className;
+    app.rotate(position);
   });
 
 });
