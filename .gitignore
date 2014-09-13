@@ -1,4 +1,11 @@
 !.gitkeep
 node_modules
 .sass-cache
-dist/*
+dist/index.html
+dist/img/*.png
+dist/css/*.css
+dist/js/*.js
+dist/lib/*.js
+dist/sound/*.mp3
+dist/sound/*.wav
+dist/sound/*.ogg
