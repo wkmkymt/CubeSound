@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/* ==============================================
+ *   Base
+ * ============================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-text-size-adjust: none;
+}
+
+article,
+section,
+nav,
+aside,
+header,
+footer,
+hgroup,
+img {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+li {
+  list-style: none;
+}

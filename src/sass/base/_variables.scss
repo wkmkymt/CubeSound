@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+// ==================================================
+//   Web Font
+// ==================================================
+
+// @import url("");
+
+
+// ==================================================
+//   Variables
+// ==================================================
+
+// ==============================
+//   Width & Height
+// ==============================
+
+// Width
+$main-width: 640px;
+$mobile-width: 480px;
+
+// Height
+$head-main-height: 60px;
+$head-mobile-height: 40px;
+$box-main-height: 50px;
+$box-mobile-height: 40px;
+
+
+// ==============================
+//   Margin & Padding
+// ==============================
+
+// Margin
+$content-tbMargin: 10px;
+$content-rlMargin: 0px;
+$card-normal-margin: 5px;
+$card-selected-margin: 2px;
+
+// Padding
+$main-tbPadding: 20px;
+$main-rlPadding: 15px;
+$mobile-tbPadding: 3%;
+$mobile-rlPadding: 2%;
+$head-tbPadding: 10px;
+$head-rlPadding: 0px;
+$foot-main-topPadding: 20px;
+$foot-main-bottomPadding: 80px;
+$foot-rlPadding: 0px;
+$foot-mobile-topPadding: 10px;
+$foot-mobile-bottomPadding: 60px;
+$above-tbPadding: 5px;
+$above-rlPadding: 20px;
+$box-main-tbPadding: 5px;
+$box-main-rlPadding: 30px;
+$box-mobile-tbPadding: 5px;
+$box-mobile-rlPadding: 20px;
+$board-padding: 5px;
+
+
+// ==============================
+//   Color
+// ==============================
+
+// Background Color
+$main-bgColor: #fff;
+$head-bgColor: #444;
+$foot-bgColor: #444;
+$pBox-bgColor: #876;
+$aBox-bgColor: #ec4;
+$aBox-hover-bgColor: #db4;
+$board-bgColor: #666;
+$card-normal-bgColor: #ccc;
+$card-selected-bgColor: #fff;
+
+// Foreground Color
+$main-fgColor: #333;
+$head-fgColor: #fff;
+$foot-main-fgColor: #999;
+$foot-link-fgColor: #ddd;
+$foot-hover-fgColor: #fff;
+$box-fgColor: #fff;
+
+// Shadow Color
+$head-shadowColor: #ccc;
+$foot-shadowColor: #ccc;
+$box-shadowColor: #333;
+$card-shadowColor: #333;
+
+// Border Color
+$card-borderColor: #83c;
+
+
+// ==============================
+//   Font
+// ==============================
+
+// Font Family
+$main-fontFamily: "Lucida Grande", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3",
+                  "Meiryo", "メイリオ", sans-serif;
+
+// Font Size
+$base-fontSize: 100%;
+$head-main-fontSize: 220%;
+$head-mobile-fontSize: 180%;
+$foot-main-fontSize: 100%;
+$foot-mobile-fontSize: 80%;
+$box-fontSize: 200%;
+
+
+// ==============================
+//   Others
+// ==============================
+
+// Image Directory
+$img-dir: "../../img/";
+
+// Image File Name
+$userCard-img: "userCard.png";
+$cpuCard-img: "cpuCard.png";
+
+
+// ==============================
+//   Others
+// ==============================
+
+// Border
+$card-border: solid 3px $card-borderColor;
+
+// Border Radius
+$box-radius: 5px;
+
+// Transition
+$base-transition: ALL 0.2s ease;
+
+// Text Shadow
+$head-shadowSize: 2px;
+$foot-shadowSize: 1px;
+$box-shadowSize: 2px;
+$card-shadowSize: 4px;

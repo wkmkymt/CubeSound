@@ -1,0 +1,242 @@
+@charset "UTF-8";
+
+/* ==================================================
+ *   HTML / Body
+ * ================================================== */
+
+html {
+  @include whSize(100%);
+  overflow-y: scroll;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  background-color: $main-bgColor;
+  color: $main-fgColor;
+  font-size: $base-fontSize;
+  font-family: $main-fontFamily;
+  font-style: normal;
+  font-weight: normal;
+}
+
+
+/* ==================================================
+ *   Site Header
+ * ================================================== */
+
+.site-header {
+  width: 100%;
+  padding: $head-tbPadding $head-rlPadding;
+  background-color: $head-bgColor;
+
+  h1 {
+    @include textHeight($head-main-height);
+    font-size: $head-main-fontSize;
+    text-align: center;
+
+    // Mobile View
+    @media screen and (max-width: $mobile-width) {
+      & {
+        @include textHeight($head-mobile-height);
+        font-size: $head-mobile-fontSize;
+      }
+    }
+
+    a {
+      color: $head-fgColor;
+      @include textShadow($head-shadowSize, $head-shadowColor);
+      @include transition($base-transition);
+
+      &:hover {
+        @include text-shadow(none);
+      }
+    }
+  }
+}
+
+
+/* ==================================================
+ *   Main
+ * ================================================== */
+
+.main {
+  @include whSize(100%);
+
+
+  // ==============================
+  //   Wrapper
+  // ==============================
+  .wrap {
+    width: getWidth($main-width, $main-rlPadding);
+    margin: 0 auto;
+    padding: $main-tbPadding $main-rlPadding;
+    @include clearfix;
+
+    // Mobile View
+    @media screen and (max-width: $main-width) {
+      & {
+        width: getWidth(100%, $mobile-rlPadding);
+        padding: $mobile-tbPadding $mobile-rlPadding;
+      }
+    }
+
+    > div {
+      margin: $content-tbMargin $content-rlMargin;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ==============================
+  //   Above Game
+  // ==============================
+
+  .above-game {
+    padding: $above-tbPadding $above-rlPadding;
+    @include clearfix;
+
+    .box {
+      display: block;
+      @include textHeight(getWidth($box-main-height, $box-main-tbPadding));
+      padding: $box-main-tbPadding $box-main-rlPadding;
+      color: $box-fgColor;
+      font-size: $box-fontSize;
+      text-align: center;
+      @include border-radius($box-radius);
+      @include boxShadow($box-shadowSize, $box-shadowColor);
+      @include transition($base-transition);
+
+
+      // Mobile View
+      @media screen and (max-width: $mobile-width) {
+        & {
+          @include textHeight(getWidth($box-mobile-height, $box-mobile-tbPadding));
+          padding: $box-mobile-tbPadding $box-mobile-rlPadding;
+        }
+      }
+    }
+
+    p.box {
+      background-color: $pBox-bgColor;
+      float: left;
+    }
+
+    a.box {
+      background-color: $aBox-bgColor;
+      cursor: pointer;
+      float: right;
+
+      &:hover {
+        background-color: $aBox-hover-bgColor;
+        @include box-shadow(none);
+      }
+    }
+  }
+
+
+  // ==============================
+  //   Game Board
+  // ==============================
+
+  .game-board {
+    @include box-sizing(border-box);
+    @include whSize(100%);
+    padding: $board-padding;
+    background-color: $board-bgColor;
+
+    ul {
+      @include whSize(100%);
+      @include clearfix;
+
+      li {
+        float: left;
+
+        // ===== Card =====
+        .card {
+          display: block;
+          @include box-sizing(border-box);
+          margin: $card-normal-margin;
+          background-color: $card-normal-bgColor;
+          border: $card-border;
+          @include boxShadow($card-shadowSize, $card-shadowColor);
+          @include transition($base-transition);
+
+          &:not(.card-got):not(.card-selected):hover {
+            cursor: pointer;
+            @include box-shadow(none);
+          }
+        }
+
+        .card-selected {
+          margin: $card-selected-margin;
+          border: none;
+          background-color: $card-selected-bgColor;
+        }
+
+        .card-got {
+          margin: $card-normal-margin;
+          background-repeat: no-repeat;
+          border: none;
+        }
+
+        .card-user {
+          background-image: getBgImage($img-dir, $userCard-img);
+        }
+
+        .card-cpu {
+          background-image: getBgImage($img-dir, $cpuCard-img);
+        }
+      }
+    }
+  }
+}
+
+
+/* ==================================================
+ *   Site Footer
+ * ================================================== */
+
+.site-footer {
+  width: 100%;
+  padding: $foot-main-topPadding $foot-rlPadding $foot-main-bottomPadding;
+  background-color: $foot-bgColor;
+
+  p {
+    text-align: center;
+
+    small {
+      color: $foot-main-fgColor;
+      font-size: $foot-main-fontSize;
+
+      a {
+        color: $foot-link-fgColor;
+        @include textShadow($foot-shadowSize, $foot-shadowColor);
+        @include transition($base-transition);
+
+        &:hover {
+          color: $foot-hover-fgColor;
+          @include text-shadow(none);
+        }
+      }
+    }
+  }
+
+  // Mobile View
+  @media screen and (max-width: $mobile-width) {
+    & {
+      padding: $foot-mobile-topPadding $foot-rlPadding $foot-mobile-bottomPadding;
+
+      p small {
+        font-size: $foot-mobile-fontSize;
+      }
+    }
+  }
+}

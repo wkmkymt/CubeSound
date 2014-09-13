@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+// ==================================================
+//   Function
+// ==================================================
+
+// Width - Top & Bottom Padding
+@function getWidth($width, $padding) {
+  @return $width - ($padding * 2);
+}
+
+// Background Image
+@function getBgImage($imgDir, $imgName) {
+  @return url($imgDir + $imgName);
+}
+
+
+// ==================================================
+//   Mixin
+// ==================================================
+
+// Widht, Height Size
+@mixin whSize($size) {
+  width: $size;
+  height: $size;
+}
+
+// Text Height
+@mixin textHeight($size) {
+  height: $size;
+  line-height: $size;
+}
+
+// Text Shadow
+@mixin textShadow($size, $color) {
+  @include text-shadow($size $size $size * 2 $color);
+}
+
+// Box Shadow
+@mixin boxShadow($size, $color) {
+  @include box-shadow($size $size $size * 2 $color);
+}
