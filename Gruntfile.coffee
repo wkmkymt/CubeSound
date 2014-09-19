@@ -118,3 +118,6 @@ module.exports = (grunt) ->
   # Tasks
   grunt.registerTask "default", ["connect", "watch"]
   grunt.registerTask "build", ["coffee", "compass", "copy", "jshint"]
+  grunt.registerTask "bcompass", "compass"
+  grunt.registerTask "bcoffee", ["coffee", "jshint"]
+  grunt.registerTask "fcopy", ["copy"]
