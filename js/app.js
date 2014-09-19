@@ -20,6 +20,7 @@ $(document).ready(function() {
   $(".rotate-button").bind("click touchstart", function() {
     var position = $(this).parent()[0].className;
     app.rotate(position);
+    app.changeRotateBtnColor();
   });
 
 });

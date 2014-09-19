@@ -321,6 +321,9 @@ var CubeSound3D = (function() {
 
     /* スコアの表示 */
     this.updateScore();
+
+    /* 回転ボタンの色の初期化 */
+    this.changeRotateBtnColor();
   }
 
 
@@ -328,15 +331,6 @@ var CubeSound3D = (function() {
    *   Rotate
    * ========= */
   function rotate(position) {
-    var faces = {
-      front:  { up: "bottom", right: "left",  down: "top",    left: "right" },
-      bottom: { up: "back",   right: "right", down: "front",  left: "left" },
-      back:   { up: "top",    right: "right", down: "bottom", left: "left" },
-      top:    { up: "front",  right: "right", down: "back",   left: "left" },
-      left:   { up: "bottom", right: "back",  down: "top",    left: "front" },
-      right:  { up: "bottom", right: "front", down: "top",    left: "back" }
-    };
-
     var angles = {
       front:  { x:   0, y:   0, z:   0 },
       bottom: { x:  90, y:   0, z:   0 },
@@ -346,7 +340,7 @@ var CubeSound3D = (function() {
       right:  { x:   0, y: 270, z:   0 }
     };
 
-    var nextFace  = faces[this.currentFace][position];
+    var nextFace  = this.getCurrentFace()[position];
     var angle     = angles[nextFace];
 
     this.currentFace = nextFace;
@@ -376,6 +370,44 @@ var CubeSound3D = (function() {
 
 
   /* ====================
+   *   Get Current Face
+   * ==================== */
+  function getCurrentFace() {
+    var faces = {
+      front:  { up: "bottom", right: "left",  down: "top",    left: "right" },
+      bottom: { up: "back",   right: "right", down: "front",  left: "left" },
+      back:   { up: "top",    right: "right", down: "bottom", left: "left" },
+      top:    { up: "front",  right: "right", down: "back",   left: "left" },
+      left:   { up: "bottom", right: "back",  down: "top",    left: "front" },
+      right:  { up: "bottom", right: "front", down: "top",    left: "back" }
+    };
+
+    return faces[this.currentFace];
+  }
+
+
+  /* ==============================
+   *   Change Rotate Button Color
+   * ============================== */
+  function changeRotateBtnColor() {
+    var bgColor = {
+      front:  "rgba(255, 100, 100, 0.7)",
+      bottom: "rgba(255, 255, 100, 0.7)",
+      back:   "rgba(100, 255, 100, 0.7)",
+      top:    "rgba(255, 100, 255, 0.7)",
+      left:   "rgba(100, 255, 255, 0.7)",
+      right:  "rgba(100, 100, 255, 0.7)"
+    };
+
+    var faces = this.getCurrentFace();
+    jQuery.each(faces, function(position, aroundFace) {
+      var btn = $("." + position + " > .rotate-button");
+      btn.css("backgroundColor", bgColor[aroundFace]);
+    });
+  }
+
+
+  /* ====================
    *   Define Prototype
    * ==================== */
   var Super = function Super () {};
@@ -383,8 +415,10 @@ var CubeSound3D = (function() {
   var _super = Super.prototype;
 
   CubeSound3D.prototype = new Super();
-  CubeSound3D.prototype.startGame = startGame;
-  CubeSound3D.prototype.rotate    = rotate;
+  CubeSound3D.prototype.startGame            = startGame;
+  CubeSound3D.prototype.rotate               = rotate;
+  CubeSound3D.prototype.changeRotateBtnColor = changeRotateBtnColor;
+  CubeSound3D.prototype.getCurrentFace       = getCurrentFace;
 
 
   return CubeSound3D;
